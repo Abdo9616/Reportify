@@ -12,7 +12,8 @@ function setupPresence(client) {
 
   const statuses = [
     { name: `v${version}`, type: ActivityType.Playing },
-    { name: `reports`, type: ActivityType.Watching }
+    { name: `reports`, type: ActivityType.Watching },
+    { name: `I'm open source!`, type: ActivityType.Listening }
   ];
 
   const updatePresence = () => {

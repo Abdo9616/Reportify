@@ -4,5 +4,33 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "os": "^0.1.2"
-  }
+  },
+  "name": "reportify",
+  "version": "v0.5.0-Alpha",
+  "description": "Simple open-source Discord bot that lets members report messages with one click. Keeps servers safe and organized.",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abdo9616/Reportify.git"
+  },
+  "keywords": [
+    "discord",
+    "reporting",
+    "moderation",
+    "discord-bot",
+    "moderation-discord-bot",
+    "smart-reports"
+  ],
+  "author": "Abdo9616",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Abdo9616/Reportify/issues"
+  },
+  "homepage": "https://github.com/Abdo9616/Reportify#readme"
 }

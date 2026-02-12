@@ -1,3 +1,5 @@
 settings.json
 .env
 start.bat
+package-lock.json
+node_modules/
