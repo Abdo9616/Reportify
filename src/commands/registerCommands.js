@@ -1,4 +1,11 @@
-const { REST, Routes, ApplicationCommandType, ContextMenuCommandBuilder, SlashCommandBuilder } = require('discord.js');
+const {
+  REST,
+  Routes,
+  ApplicationCommandType,
+  ContextMenuCommandBuilder,
+  SlashCommandBuilder,
+  ChannelType,
+} = require('discord.js');
 require('dotenv').config();
 
 const TOKEN = process.env.TOKEN;
@@ -16,7 +23,11 @@ module.exports = async function registerCommands() {
     .setName('setreportchannel')
     .setDescription('Set the channel where message reports are sent')
     .addChannelOption(opt =>
-      opt.setName('channel').setDescription('Channel for reports').setRequired(true)
+      opt
+        .setName('channel')
+        .setDescription('Channel for reports (defaults to current channel)')
+        .addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement)
+        .setRequired(false)
     );
 
   const commands = [reportContext.toJSON(), setReportChannel.toJSON()];

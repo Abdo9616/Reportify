@@ -34,11 +34,17 @@ if (ch && ch.isTextBased()) reportedMessage = await ch.messages.fetch(linkMessag
 const info = {
 channelId: linkChannelId,
 messageId: linkMessageId,
-authorTag: reportedMessage ? `${reportedMessage.author.tag} (<@${reportedMessage.author.id}>)` : 'Unknown',
+authorId: reportedMessage?.author?.id || null,
+authorTag: reportedMessage?.author ? `${reportedMessage.author.tag} (<@${reportedMessage.author.id}>)` : 'Unknown',
 content: reportedMessage ? reportedMessage.content : null,
 reason,
 link: `https://discord.com/channels/${linkGuildId}/${linkChannelId}/${linkMessageId}`
 };
+
+if (info.authorId && info.authorId === interaction.user.id) {
+await interaction.editReply({ content: 'You cannot report your own message.' });
+return;
+}
 
 
 try {

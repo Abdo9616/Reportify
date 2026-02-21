@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField, ChannelType } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -14,12 +14,24 @@ function saveSettings() {
 fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
 }
 
+const allowedReportChannelTypes = new Set([ChannelType.GuildText, ChannelType.GuildAnnouncement]);
+
+function isValidReportChannel(channel) {
+return Boolean(channel && channel.isTextBased() && allowedReportChannelTypes.has(channel.type));
+}
+
 
 module.exports = {
 data: new SlashCommandBuilder()
 .setName('setreportchannel')
 .setDescription('Set the channel where message reports will be sent')
-.addChannelOption(opt => opt.setName('channel').setDescription('Channel for reports').setRequired(true)),
+.addChannelOption(opt =>
+opt
+.setName('channel')
+.setDescription('Channel for reports (defaults to current channel)')
+.addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement)
+.setRequired(false)
+),
 
 
 async execute(interaction) {
@@ -28,9 +40,10 @@ return interaction.reply({ content: 'You need Administrator permissions to use t
 }
 
 
-const channel = interaction.options.getChannel('channel');
-if (!channel || !channel.isTextBased()) {
-return interaction.reply({ content: 'Please select a text-based channel.', flags: 64 });
+const selectedChannel = interaction.options.getChannel('channel');
+const channel = selectedChannel || interaction.channel;
+if (!isValidReportChannel(channel)) {
+return interaction.reply({ content: 'Please select a valid text or announcement channel.', flags: 64 });
 }
 
 

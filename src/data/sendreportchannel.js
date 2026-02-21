@@ -6,4 +6,12 @@ const filePath = path.resolve(__dirname, 'sendreportchannel.json');
 // Load existing data or create empty file
 if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '{}');
 
-module.exports = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+let settings = {};
+try {
+  settings = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+} catch (error) {
+  settings = {};
+  fs.writeFileSync(filePath, '{}');
+}
+
+module.exports = settings;
