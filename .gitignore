@@ -3,3 +3,4 @@ settings.json
 start.bat
 package-lock.json
 node_modules/
+src/data/sendreportchannel.json
